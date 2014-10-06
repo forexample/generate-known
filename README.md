@@ -61,7 +61,7 @@ Linking CXX executable foo.exe
 ```
 
 Run again (no changes):
-```
+```bash
 > cmake --build _builds
 [ 75%] Built target A
 [100%] Built target foo
@@ -167,7 +167,7 @@ add_executable(foo main.cpp)
 # target_link_libraries(foo A)
 ```
 
-```
+```cpp
 // main.cpp
 int main() {
 //  std::cout << "A1 say: " << A1() << std::endl;
@@ -267,7 +267,7 @@ Build it first time:
 ```
 
 Change that not really touches any of `A{1,2}.cpp`:
-```
+```bash
 > grep new script.py
 print('Generate (python script, new)')
 ```
@@ -302,7 +302,7 @@ A1.cpp A2.cpp: script.py
 It means that if `script.py` changes, but `A1.cpp` or `A2.cpp` not, then custom command will be run every time.
 Remove `--check-changes`:
 
-```
+```cmake
 add_custom_command(
     OUTPUT "${gen_dir}/A1.cpp" "${gen_dir}/A2.cpp"
     COMMAND
@@ -323,13 +323,13 @@ Build project:
 ```
 
 Modify `script.py`:
-```
+```bash
 > grep new script.py
 print('Generate (python script, new)')
 ```
 
 Now custom command run every time again:
-```
+```bash
 > cmake --build _builds
 [ 25%] Generate (custom command)
 Generate (python script, new)
@@ -340,7 +340,7 @@ Generate (python script, new)
 ```
 
 ... and again:
-```
+```bash
 > cmake --build _builds
 [ 25%] Generate (custom command)
 Generate (python script, new)
