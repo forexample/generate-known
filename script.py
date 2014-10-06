@@ -4,7 +4,7 @@ import argparse
 import os
 import sys
 
-parser = argparse.ArgumentParser('Generate source files: A1.cpp A2.cpp')
+parser = argparse.ArgumentParser('Generate source files: A.cpp B.cpp C.cpp')
 parser.add_argument('--dir', help='Output directory', required=True)
 parser.add_argument(
     '--smart',
@@ -34,23 +34,32 @@ def create(filename, content):
   change = True
   open(filename, 'w').write(content)
 
-# Create A1.cpp
+# Create A.cpp
 content = """
-const char* A1() {
-  return "Hello from A1";
+const char* A() {
+  return "Hello from A";
 }
 """
 
-create(os.path.join(outdir, 'A1.cpp'), content)
+create(os.path.join(outdir, 'A.cpp'), content)
 
-# Create A2.cpp
+# Create B.cpp
 content = """
-const char* A2() {
-  return "Hello from A2";
+const char* B() {
+  return "Hello from B";
 }
 """
 
-create(os.path.join(outdir, 'A2.cpp'), content)
+create(os.path.join(outdir, 'B.cpp'), content)
+
+# Create C.cpp
+content = """
+const char* C() {
+  return "Hello from C";
+}
+"""
+
+create(os.path.join(outdir, 'C.cpp'), content)
 
 # Check changes
 if (not change) and args.check_changes:
