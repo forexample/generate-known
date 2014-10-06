@@ -98,7 +98,7 @@ make[2]: *** No rule to make target 'generated/A.cpp', needed by 'A/CMakeFiles/A
 ...
 ```
 
-So there is only one method to trigger custom command - add a target with dependent sources (sources from custom command):
+So there is only one method to trigger custom command - add a target with dependent sources (sources from custom command) in the same directory:
 ```cmake
 add_custom_target(
     Generate
