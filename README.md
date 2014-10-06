@@ -15,15 +15,15 @@ in parallel or the two instances of the rule may conflict (instead use
 add_custom_target to drive the command and make the other targets depend on that one)
 ```
 
-Try example with `-j4` (for `Makefile` generator):
+Try example with `-j3` (for `Makefile` generator):
 ```bash
 > cmake -H. -B_builds
-> cmake --build _builds -- -j4
+> cmake --build _builds -- -j3
 ```
 
 Result is correct (run custom command once, races only for independent target `A`, `B` and `C`):
 ```bash
-> cmake --build _builds -- -j4
+> cmake --build _builds -- -j3
 Scanning dependencies of target Generated
 [ 11%] Generate (custom command)
 Generate (python script)
@@ -47,8 +47,63 @@ Linking CXX executable foo.exe
 [100%] Built target foo
 ```
 
+Run again (verify no changes):
+```bash
+> cmake --build _builds
+[ 11%] Generate (target)
+[ 22%] Built target Generated
+[ 44%] Built target A
+[ 66%] Built target B
+[ 88%] Built target C
+[100%] Built target foo
+```
 
+## Dependencies
+
+Dependencies `{A, B, C} -> Generate` are important:
+
+```cmake
+add_dependencies(A Generated)
+add_dependencies(B Generated)
+add_dependencies(C Generated)
+```
+
+because otherwise there are not much difference - targets still build independently, hence they run custom command simultaneously (also note that `Generate` excluded from `ALL`):
+
+![parallel][4]
+
+```cmake
+# Remove dependency
+# add_dependencies(A Generated)
+# add_dependencies(B Generated)
+# add_dependencies(C Generated)
+```
+
+Run new code:
+```bash
+> cmake -H. -B_builds
+> cmake --build _builds -- -j3
+```
+
+See that now there are 3 run of the custom command which lead to crash:
+```
+> cmake --build _builds -- -j3
+[ 14%] [ 28%] [ 42%] Generate (custom command)
+Generate (custom command)
+Generate (custom command)
+Generate (python script)
+Generate (python script)
+No changes!
+CMakeFiles/A.dir/build.make:53: recipe for target 'generated/A.cpp' failed
+...
+```
+
+Moving from file-level to target-level solve the problem:
+
+![target-level][5]
 
 [1]: https://github.com/forexample/generate-known/tree/master
 [2]: https://raw.githubusercontent.com/forexample/generate-known/multiple/diagrams/multiple.png
 [3]: http://www.cmake.org/cmake/help/v3.0/command/add_custom_command.html
+[4]: https://raw.githubusercontent.com/forexample/generate-known/multiple/diagrams/parallel.png
+[5]: https://raw.githubusercontent.com/forexample/generate-known/multiple/diagrams/target-level.png
