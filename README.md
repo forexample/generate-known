@@ -8,7 +8,7 @@ Important notes inherited from [master][1]:
 
 ## One/Multiple difference
 
-[add_custom_command] has known limitation about parallel build:
+[add_custom_command][3] has known limitation about parallel build:
 ```
 Do not list the output in more than one independent target that may build
 in parallel or the two instances of the rule may conflict (instead use
@@ -50,5 +50,5 @@ Linking CXX executable foo.exe
 
 
 [1]: https://github.com/forexample/generate-known/tree/master
-[2]: TODO
+[2]: https://raw.githubusercontent.com/forexample/generate-known/multiple/diagrams/multiple.png
 [3]: http://www.cmake.org/cmake/help/v3.0/command/add_custom_command.html
