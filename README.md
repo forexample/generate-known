@@ -116,7 +116,6 @@ message("main: ${main_gen}, A1: ${A1_gen}")
 ```
 
 ```bash
-> rm -rf _builds
 > cmake -H. -B_builds
 ...
 main: NOTFOUND, A1: 1
@@ -137,7 +136,6 @@ add_library(A "${gen_dir}/A1.cpp" "${gen_dir}/A2.cpp")
 ```
 
 ```bash
-> rm -rf _builds
 > cmake -H. -B_builds
 -- Configuring done
 CMake Error at CMakeLists.txt:21 (add_library):
