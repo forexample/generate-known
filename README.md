@@ -157,7 +157,7 @@ generate the file using the command at build time
 
 If you remove all targets that use `OUTPUT` then custom command will not be invoked, for example lets remove library `A`:
 
-![nodeps][TODO]
+![nodeps][5]
 
 ```cmake
 # CMakeLists.txt
@@ -367,3 +367,4 @@ You can use any strategy here, for example touch only one generated file that ha
 [2]: http://www.cmake.org/cmake/help/v3.0/command/add_custom_command.html
 [3]: https://raw.githubusercontent.com/forexample/generate-known/master/diagrams/origin.png
 [4]: http://www.cmake.org/cmake/help/v3.0/prop_sf/GENERATED.html
+[5]: https://raw.githubusercontent.com/forexample/generate-known/master/diagrams/nodeps.png
