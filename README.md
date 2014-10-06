@@ -63,7 +63,7 @@ Linking CXX executable foo.exe
 
 ## Target from subdirectory
 
-[add_custom_command][3] create dependencies between sources only for targets inside the **same** directory:
+[add_custom_command][3] create dependencies only for targets inside the **same** directory:
 ```
 A target created in the same directory (CMakeLists.txt file) that specifies
 any output of the custom command as a source file is given a rule to
@@ -98,7 +98,7 @@ make[2]: *** No rule to make target 'generated/A.cpp', needed by 'A/CMakeFiles/A
 ...
 ```
 
-So there is only one method to trigger custom command - add some target with source from custom command:
+So there is only one method to trigger custom command - add a target with dependent sources (sources from custom command):
 ```cmake
 add_custom_target(
     Generate
@@ -114,9 +114,37 @@ And adding dependency between target `Generate` and `A` will help to build `A.cp
 
 ![subdir-add-dep][6]
 
+## Property GENERATED
+
+[add_custom_command][3] set property [GENERATED][7] for sources from `OUTPUT` list. Source file properties do not inherit from top [directory][8]:
+
+```
+Source file properties are visible only to targets added
+in the same directory (CMakeLists.txt)
+```
+
+If remove `GENERATED`:
+```cmake
+# A/CMakeLists.txt
+# set_source_files_properties("${gen_dir}/A.cpp" PROPERTIES GENERATED YES)
+```
+
+Build will failed since CMake expected `A.cpp` to be the regular file:
+```bash
+> cmake -H. -B_builds
+> cmake --build _builds
+...
+CMake Error at A/CMakeLists.txt:2 (add_library):
+  Cannot find source file:
+
+    /.../_builds/generated/A.cpp
+```
+
 [1]: https://github.com/forexample/generate-known/tree/master
 [2]: https://raw.githubusercontent.com/forexample/generate-known/subdirectory/diagrams/subdirectory.png
 [3]: http://www.cmake.org/cmake/help/v3.0/command/add_custom_command.html
 [4]: https://raw.githubusercontent.com/forexample/generate-known/subdirectory/diagrams/subdir-nodeps.png
 [5]: https://raw.githubusercontent.com/forexample/generate-known/subdirectory/diagrams/subdir-add-gen.png
 [6]: https://raw.githubusercontent.com/forexample/generate-known/subdirectory/diagrams/subdir-add-dep.png
+[7]: http://www.cmake.org/cmake/help/v3.0/prop_sf/GENERATED.html
+[8]: http://www.cmake.org/cmake/help/v3.0/command/set_source_files_properties.html
