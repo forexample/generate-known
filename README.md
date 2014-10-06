@@ -1,10 +1,10 @@
-This guide extends simple example from branch [master][1] so that CMake will generate sources for several targets instead of one. Script `script.py` will generate files `A.cpp`, `B.cpp` and `C.cpp` these files will be used to create libraries `A`, `B` and `C`:
+This guide extends simple example from branch [master][1] so that CMake will generate sources for several targets instead of one. Script `script.py` will generate files `A.cpp`, `B.cpp` and `C.cpp` these files will be used to create libraries `A`, `B` and `C`. Special custom target `Generate` will help avoid races:
 
 ![multiple][2]
 
 Important notes inherited from [master][1]:
 * we know that `script.py` will create only known files (i.e. source list is fixed: `A.cpp`, `B.cpp` and `C.cpp`)
-* custom command and target is in the same directory
+* custom command and targets are in the same directory
 
 ## One/Multiple difference
 
