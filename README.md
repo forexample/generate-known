@@ -155,7 +155,7 @@ any output of the custom command as a source file is given a rule to
 generate the file using the command at build time
 ```
 
-If you remove all target that use `OUTPUT` then custom command will not be invoked, for example lets remove library `A`:
+If you remove all targets that use `OUTPUT` then custom command will not be invoked, for example lets remove library `A`:
 
 ![nodeps][TODO]
 
