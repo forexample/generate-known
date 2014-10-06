@@ -45,7 +45,7 @@ Test it:
 ...
 ```
 
-Change python script so that `A1.cpp` emits other message (important to change both script and some file, see details below). Note that only one file rebuild:
+Change python script so that `A1.cpp` emits other message (important to change the script so that generated result `A1.cpp` will change, not only python code, see details below). Note that only one file rebuild:
 ```bash
 > grep new script.py
   return "Hello from A1 (new)";
