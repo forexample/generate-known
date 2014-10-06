@@ -126,7 +126,7 @@ main: NOTFOUND, A1: 1
 ```cmake
 # Remove A2.cpp from OUTPUT list
 add_custom_command(
-    OUTPUT "${gen_dir}/A1.cpp"
+    OUTPUT "${gen_dir}/A1.cpp" # "${gen_dir}/A2.cpp"
     COMMAND
 ...
 
